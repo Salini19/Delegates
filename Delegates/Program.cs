@@ -7,7 +7,7 @@ namespace Delegates
         public delegate void MyDelegate(int x, int y);
         static void Main(string[] args)
         {
-           
+            //Unicast deligate
 
             MyDelegate del1 = new MyDelegate(Add);
             del1(8, 5);
@@ -19,17 +19,16 @@ namespace Delegates
             del3(8, 5);
 
             Console.WriteLine();
-            /****************************************************/
 
-            Console.WriteLine("Multicast Delegate");
-            Console.WriteLine();
 
-            MyDelegate del = new MyDelegate(Add);
-            del += Sub;
-            del += Multiply;
-            del(8, 5);
+            ActionDelegate();
+            PredicateDelegate();
+            FuncDelegate();
+            Multicast();
 
-            /****************************************************/
+        }
+        public static void ActionDelegate()
+        {
             Console.WriteLine();
             Console.WriteLine("Action Delegate");
             Action<int, int> action = Add;
@@ -44,17 +43,30 @@ namespace Delegates
             Action<int, int> action1 = (int p, int q) => { Console.WriteLine(p - q); };
             action(1, 2);
             action1(8, 6);
+            Console.WriteLine();
+        }
+        public static void Multicast()
+        {
 
-            /****************************************************/
+            Console.WriteLine("Multicast Delegate");
+            Console.WriteLine();
 
+            MyDelegate del = new MyDelegate(Add);
+            del += Sub;
+            del += Multiply;
+            del(8, 5);
+        }
+
+        public static void FuncDelegate()
+        {
             Console.WriteLine();
             Console.WriteLine("Func Delegate");
             Console.WriteLine();
             //func can have input parameters from 0 to 16 and one output parameter.Last parameter
             //of the Func delegate is the out parameter which is considered as return type and used
             //for the result
-            Func<int,int,int> myfunc = Addition;
-            Console.WriteLine("Addition {0} ",myfunc(10,11));
+            Func<int, int, int> myfunc = Addition;
+            Console.WriteLine("Addition {0} ", myfunc(10, 11));
 
 
             Func<int, int, int> myfunc2 = (int x, int y) =>
@@ -64,24 +76,23 @@ namespace Delegates
             Console.WriteLine("Addition1 {0} ", myfunc(10, 11));
 
 
-            Func<int, int, int> myfunc3 = delegate(int x, int y) 
+            Func<int, int, int> myfunc3 = delegate (int x, int y)
             {
                 return x + y;
             };
             Console.WriteLine("Addition2 {0} ", myfunc(10, 11));
             Console.WriteLine();
-            /****************************************************/
-
+        }
+        public static void PredicateDelegate()
+        {
             Console.WriteLine("Predicate Deligate");
             Console.WriteLine();
 
             //return type is boolean
             //This delegate takes only one input and returns the value in the form of true or false.
             Predicate<string> predicate = str => str.Equals(str.ToLower());
-            Console.WriteLine($"{ predicate("Hello") }"); 
+            Console.WriteLine($"{predicate("Hello")}");
             Console.WriteLine($"{predicate("hello")}");
-
-
         }
         public static int Addition(int x, int y)
         {
